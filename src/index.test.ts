@@ -1,4 +1,6 @@
+import { jest } from "@jest/globals";
 import { XMLParser } from "fast-xml-parser";
+import { fetchArxiv } from "./index.js";
 
 // Define the types locally for the test since they mirror index.ts
 interface ArxivCategory {
@@ -107,5 +109,31 @@ describe("ArXiv XML Parsing logic", () => {
     expect(authors).toEqual(["Albert Einstein", "Niels Bohr"]);
     expect(categories).toEqual(["physics.gen-ph"]);
     expect(pdf_url).toBe("http://arxiv.org/pdf/2105.14022v1");
+  });
+});
+
+describe("fetchArxiv API endpoint", () => {
+  beforeEach(() => {
+    jest.restoreAllMocks();
+  });
+
+  it("should fetch from arXiv and elegantly normalize the Atom feed into a Paper array", async () => {
+    // Mock the global fetch to return our mockArxivAtomFeed
+    jest.spyOn(global, "fetch").mockResolvedValue({
+      ok: true,
+      text: async () => mockArxivAtomFeed,
+      status: 200,
+      statusText: "OK",
+    } as Response);
+
+    const result = await fetchArxiv("http://fake-url.com");
+    expect(global.fetch).toHaveBeenCalledWith("http://fake-url.com");
+    expect(result).toHaveLength(1);
+    expect(result[0].id).toBe("2105.14022v1");
+    expect(result[0].title).toBe("Mock Physics Paper Title");
+    expect(result[0].summary).toBe("This is a mock summary of an amazing paper. It has multiple lines and weird spacing.");
+    expect(result[0].authors).toEqual(["Albert Einstein", "Niels Bohr"]);
+    expect(result[0].categories).toEqual(["physics.gen-ph"]);
+    expect(result[0].pdf_url).toBe("http://arxiv.org/pdf/2105.14022v1");
   });
 });

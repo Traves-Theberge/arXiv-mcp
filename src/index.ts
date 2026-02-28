@@ -470,7 +470,9 @@ async function main(): Promise<void> {
     console.error("Arxic MCP Server natively optimized for AI running on stdio");
 }
 
-main().catch((error: unknown) => {
-    console.error("Server error:", error);
-    process.exit(1);
-});
+if (process.env.NODE_ENV !== "test") {
+    main().catch((error: unknown) => {
+        console.error("Server error:", error);
+        process.exit(1);
+    });
+}
