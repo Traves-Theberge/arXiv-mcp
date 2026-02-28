@@ -59,7 +59,33 @@ You can add this server to any MCP-compatible client.
 > **Important**: Replace `/absolute/path/to/` with the actual path on your system.
 
 ### Option 1: Docker (Recommended)
-This method ensures the `arxiv_download_paper` tool has permission to save PDFs to your machine via the `-v` volume mount.
+This method ensures the `arxiv_download_paper` tool has permission to save PDFs to your machine via the `-v` volume mount. Because Docker handles permissions differently across operating systems, please use the correct configuration for your machine:
+
+#### Linux / macOS
+If you use Mac or Linux, you must pass your User ID `-u 1000:1000` (or `501:20` for some Macs) so the downloaded PDF isn't locked as a `root` file.
+
+```json
+{
+  "mcpServers": {
+    "arxic-mcp": {
+      "command": "docker",
+      "args": [
+        "run",
+        "-i",
+        "--rm",
+        "-u",
+        "1000:1000",
+        "-v",
+        "/Users/yourname/Downloads:/Users/yourname/Downloads", 
+        "arxic-mcp"
+      ]
+    }
+  }
+}
+```
+
+#### Windows (WSL2 / Docker Desktop)
+Windows Docker Desktop generally handles file mount translations automatically. You can safely omit the User ID flag, but be sure to use the proper `/c/Users/...` or WSL absolute path format.
 
 ```json
 {
@@ -71,7 +97,7 @@ This method ensures the `arxiv_download_paper` tool has permission to save PDFs 
         "-i",
         "--rm",
         "-v",
-        "/absolute/path/to/your/pdf/folder:/absolute/path/to/your/pdf/folder", 
+        "/c/Users/yourname/Desktop:/c/Users/yourname/Desktop", 
         "arxic-mcp"
       ]
     }
@@ -94,6 +120,8 @@ If you prefer running natively without Docker:
   }
 }
 ```
+
+> **Pro-Tip**: Running natively enables the `arxiv_download_paper` tool to save PDFs to *any* folder on your actual system (like `~/Downloads`), removing the need to configure complex volume mounts!
 
 ### IDE Specific Instructions
 *   **Antigravity**: Add the JSON block above to your local `.gemini/` configuration file.
