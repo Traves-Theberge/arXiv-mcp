@@ -102,7 +102,7 @@ Windows Docker Desktop generally handles file mount translations automatically. 
         "-i",
         "--rm",
         "-v",
-        "/c/Users/yourname/Desktop:/c/Users/yourname/Desktop", 
+        "/c/Users/yourname/Downloads:/c/Users/yourname/Downloads", 
         "arxic-mcp"
       ]
     }
