@@ -8,39 +8,31 @@ metadata:
 
 # arXiv Research Skill
 
-## When to use this skill
-Use this skill when collaborating with a user on academic research, specifically when they ask you to interact with **arXiv.org**. This skill teaches you how to efficiently use the `arxic-mcp` toolset to find and analyze academic papers.
+## Core Directives
+1. **Never scrape arxiv.org directly.** Always use the `arxic-mcp` tools.
+2. **Token Efficiency FIRST.** Never use `arxiv_get_paper_details` or pull full abstracts as your first step unless the user explicitly provided a paper ID. Start broad.
+3. **Rate Limits.** The tools enforce a mandatory 3-second delay. Do not retry if a call is taking slightly longer than expected.
 
-## ⚠️ Important Guidelines for AI Agents
+## Tool Conditionals
 
-1. **Token Efficiency First**: Never pull full abstracts using `arxiv_get_paper_details` as your very first step unless a user explicitly provided an ID. 
-2. **Rate Limits**: The `arxic-mcp` tools intrinsically enforce a 3-second delay between requests to comply with arXiv's Terms of Use. If you need to chain multiple calls, expect a delay. Do not retry if a call is taking slightly longer than expected.
-3. **No Web Retrieval**: Do NOT try to scrape or browse `arxiv.org` manually. ALWAYS use the provided `arxiv_*` MCP tools.
+**IF** the user asks to search for a topic, keyword, or author (e.g., "papers on quantum gravity", "find papers by LeCun"):
+**THEN** use `arxiv_search` with parameters `query` and `max_results` to retrieve a list of IDs.
+**AND THEN** present the titles and IDs to the user, pausing for them to select an ID for deeper analysis.
 
-## Supported Workflows
+**IF** the user asks for the newest or most trending papers in a general field without a specific keyword (e.g., "what's new in AI?"):
+**THEN** use `arxiv_search_trending_papers` with a standard `category` prefix (e.g., `cs.AI`).
 
-### Workflow 1: Broad Discovery
-When a user asks "what are the latest papers on quantum mechanics?" or "find me papers by Yann LeCun":
-1. **Always start** by executing the `arxiv_search` or `arxiv_search_trending_papers` tool.
-2. Formulate a precise search query (e.g., `quantum mechanics` or `au:LeCun`).
-3. Present the resulting list (which includes Title, Author, and ID) to the user.
-4. **Pause.** Wait for the user to select a paper id before proceeding to deeper analysis.
+**IF** the user provides a `paper_id` and asks for a quick overview or TL;DR:
+**THEN** use `arxiv_get_paper_summary` to get an AI-optimized synopsis.
 
-### Workflow 2: Deep Dive
-When a user asks "what is paper 1706.03762 about?" or "summarize this arXiv paper":
-1. You already have the `paper_id`.
-2. Do **not** use `arxiv_search`.
-3. If they specifically asked for a very quick TL;DR, use the `arxiv_get_paper_summary` tool.
-4. If they asked for full details, use the `arxiv_get_paper_details` tool to ingest the complete unabridged abstract and metadata into your context.
-5. Provide the user with a comprehensive breakdown.
+**IF** the user provides a `paper_id` and asks for full, deep-dive analysis of the methodology and results:
+**THEN** use `arxiv_get_paper_details` to ingest the complete, unabridged abstract and metadata into context.
 
-### Workflow 3: The Rabbit Hole (Similar Papers)
-When a user asks "find me more papers like 1706.03762" or "what else is in this category?":
-1. Use the `arxiv_search_related_papers` tool, passing in the target `paper_id`.
-2. The server will automatically extract the primary category and find relevant, adjacent research.
-3. Present the list of related papers.
+**IF** the user provides a `paper_id` and asks for more papers like it, or to go down a "rabbit hole":
+**THEN** use `arxiv_search_related_papers` to automatically cross-reference the primary category and find adjacent research.
 
-### Workflow 4: Citations & PDFs
-When a user asks to "cite this paper" or "download the PDF":
-* **Citations**: Immediately execute the `arxiv_get_paper_citations` tool. You can pass an optional format (`bibtex`, `apa`, or `mla`). Always provide the returned citation inside a markdown code block to the user.
-* **Downloads**: If you have permissions and the `arxiv_download_paper` tool is available, provide the `paper_id` and an absolute `destination_dir` path on their local machine to cleanly save the PDF locally for them.
+**IF** the user asks you to cite a paper or generate a bibliography:
+**THEN** use `arxiv_get_paper_citations` passing the `paper_id` and optional `format` (bibtex, apa, mla). Display the output in a codeblock.
+
+**IF** the user explicitly asks to "download the PDF" or "save the paper to my machine":
+**THEN** use `arxiv_download_paper` passing the `paper_id` and an absolute path for `destination_dir`.
