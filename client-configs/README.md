@@ -32,3 +32,21 @@ Navigate to **Cursor Settings > Features > MCP Servers**. Add a new server and s
 ### 4. [Zed Editor](zed.json)
 **Installation Location:**  
 Add to your user `settings.json` file inside Zed.
+
+### 5. [Antigravity](antigravity.json)
+**Installation Location:**  
+`~/.gemini/antigravity/mcp_config.json`
+
+### 6. [Claude Code (CLI)](claude-code.json)
+**Installation Command:**  
+Normally, Claude Code uses direct terminal commands to add servers:
+```bash
+claude mcp add arxic-mcp -- docker run -i --rm -u 1000:1000 -v /Users/yourname/Downloads:/Users/yourname/Downloads arxic-mcp
+```
+Alternatively, you can manually paste the JSON into the Claude Code config file (location may vary by OS).
+
+### 7. [VS Code (Cline / Roo Code / Roo Context)](vscode-cline-roo.json)
+**Installation Location:**  
+Click the `MCP Servers` tab within the extension, or directly edit the global settings JSON.
+* **Cline:** `~/Library/Application Support/Code/User/globalStorage/saoudrizwan.claude-dev/settings/cline_mcp_settings.json`
+* **Roo Code:** `~/Library/Application Support/Code/User/globalStorage/rooveterinaryinc.roo-cline/settings/cline_mcp_settings.json`

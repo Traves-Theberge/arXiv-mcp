@@ -1,0 +1,17 @@
+{
+    "mcpServers": {
+        "arxic-mcp": {
+            "command": "docker",
+            "args": [
+                "run",
+                "-i",
+                "--rm",
+                "-u",
+                "1000:1000",
+                "-v",
+                "/Users/yourname/Downloads:/Users/yourname/Downloads",
+                "arxic-mcp"
+            ]
+        }
+    }
+}
