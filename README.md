@@ -7,6 +7,7 @@ This project is AI-Optimized, meaning the returned data is carefully formatted t
 ## Documentation
 * **[API Documentation Focus](docs/api.md)**: Detailed breakdown of the arXiv API tools, parameters, and rate limit protections.
 * **[Client Configurations](client-configs/README.md)**: Additional examples for running this server on different AI Clients.
+* **[Agent Skill Pack](skills/arxiv-research/SKILL.md)**: An official `agentskills.io` compliant instruction profile to teach AI assistants the most efficient way to chain these `arxiv_*` MCP tools.
 
 ## Features & Tools
 

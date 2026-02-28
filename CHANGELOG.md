@@ -5,6 +5,12 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [2.1.0] - 2026-02-28
+
+### Added
+- **Agent Skill Pack**: Implemented the official `arxiv-research` skill profile fully compliant with the `agentskills.io` specification to provide native LLM instruction tuning.
+- **Extended Client Configs**: Added standalone JSON configurations for Antigravity, Claude Code (CLI), and VS Code extensions.
+
 ## [2.0.1] - 2026-02-28
 
 ### Changed
