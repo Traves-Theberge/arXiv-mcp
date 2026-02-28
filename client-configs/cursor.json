@@ -15,7 +15,3 @@
         }
     }
 }
-// Installation Location:
-// Navigate to Cursor Settings > Features > MCP Servers 
-// Add a new server and specify the raw commands natively, 
-// OR paste this into a global Cursor MCP config.

@@ -4,6 +4,10 @@ A Model Context Protocol (MCP) server that provides AI assistants with a seamles
 
 This project is AI-Optimized, meaning the returned data is carefully formatted to remain within context windows and provide exactly what large language models need for efficient, hallucination-free research.
 
+## Documentation
+* **[API Documentation Focus](docs/api.md)**: Detailed breakdown of the arXiv API tools, parameters, and rate limit protections.
+* **[Client Configurations](client-configs/README.md)**: Additional examples for running this server on different AI Clients.
+
 ## Features & Tools
 
 *   **`arxiv_search`**: Fast discovery tool. Pass a search string (like `"quantum gravity"`) and get a lightweight list of IDs, Titles, and Authors.
@@ -48,7 +52,7 @@ docker build -t arxic-mcp .
 
 Then, run your MCP client using this command configuration:
 ```bash
-docker run -i --rm -v /home/user/Desktop:/home/user/Desktop arxic-mcp
+docker run -i --rm -v /home/user/Downloads:/home/user/Downloads arxic-mcp
 ```
 *(Note: Passing `-v` ensures the `download_pdf` tool has permission to save files to your local host machine!)*
 
@@ -136,3 +140,6 @@ If you prefer running natively without Docker:
 
 ## License
 [MIT](LICENSE)
+
+---
+*Made with ❤️ by Traves Theberge*
