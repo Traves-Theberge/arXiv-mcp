@@ -1,0 +1,21 @@
+{
+    "mcpServers": {
+        "arxic-mcp": {
+            "command": "docker",
+            "args": [
+                "run",
+                "-i",
+                "--rm",
+                "-u",
+                "1000:1000",
+                "-v",
+                "/Users/yourname/Downloads:/Users/yourname/Downloads",
+                "arxic-mcp"
+            ]
+        }
+    }
+}
+// Installation Location:
+// Navigate to Cursor Settings > Features > MCP Servers 
+// Add a new server and specify the raw commands natively, 
+// OR paste this into a global Cursor MCP config.
